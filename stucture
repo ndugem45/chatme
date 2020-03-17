@@ -1,0 +1,18 @@
+--- chat screen structure ---
+- stack navigation
+    - tab navigation
+        - chat list screen
+        - setting screen
+    - chat room screen
+    - user profile screen
+    - login screen
+    - register screen
+
+
+--- base component list ---
+- button
+- top bar
+- tab bar
+- avatar icon
+- chat list item
+- chat bubble item
