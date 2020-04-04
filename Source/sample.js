@@ -63,36 +63,76 @@ export const chatData = [
         id: 2,
         name: 'Wahyu',
         online: true,
-        chat: [{
-            id: 1,
-            message: 'Hey, jadi engga',
-            time: '2m',
-            me: false
-        },
-        {
-            id: 2,
-            message: 'Jadi kemana ?',
-            time: '1m',
-            me: true
-        },
-        {
-            id: 3,
-            message: 'Ke tempat indah, acara ultah',
-            time: '1m',
-            me: false
-        },
-        {
-            id: 4,
-            message: 'Kuy, mandi dulu',
-            time: '30s',
-            me: true
-        },
-        {
-            id: 5,
-            message: 'Cepetan !!',
-            time: 'now',
-            me: false
-        }]
+        chat: [
+            {
+              "id": 8,
+              "message": "Nohh",
+              "time": "now",
+              "me": true,
+              "reply": {
+                "id": 4,
+                "message": "Kuy, mandi dulu",
+                "time": "30s",
+                "me": true,
+                "reply": false
+              }
+            },
+            {
+              "id": 7,
+              "message": "Nohh",
+              "time": "now",
+              "me": false,
+              "reply": {
+                "id": 3,
+                "message": "Acara ultah",
+                "time": "1m",
+                "me": false,
+                "reply": false
+              }
+            },
+            {
+              "id": 6,
+              "message": "Mau kmn ?",
+              "time": "now",
+              "me": true,
+              "reply": false
+            },
+            {
+              "id": 5,
+              "message": "Cepetan !!",
+              "time": "now",
+              "me": false,
+              "reply": false
+            },
+            {
+              "id": 4,
+              "message": "Kuy, mandi dulu",
+              "time": "30s",
+              "me": true,
+              "reply": false
+            },
+            {
+              "id": 3,
+              "message": "Acara ultah",
+              "time": "1m",
+              "me": false,
+              "reply": false
+            },
+            {
+              "id": 2,
+              "message": "Jadi kemana ?",
+              "time": "1m",
+              "me": true,
+              "reply": false
+            },
+            {
+              "id": 1,
+              "message": "Hey, jadi engga",
+              "time": "2m",
+              "me": false,
+              "reply": false
+            }
+          ]
     },
     {
         id: 5,
