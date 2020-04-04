@@ -2,6 +2,7 @@ import React from 'react';
 import {
     SafeAreaView,
     StyleSheet,
+    ActivityIndicator,
     ScrollView,
     View,
     Text,
@@ -15,6 +16,7 @@ import {
 import Icon from 'react-native-vector-icons/Entypo';
 import { DefaultText } from '../BaseComponent/defaultText';
 import { constStyle } from '../BaseComponent/constStyle';
+import { chatData } from '../Source/sample';
 
 
 
@@ -35,6 +37,7 @@ export default class ChatListComponent extends React.Component {
         this.state = {
             chat: '',
             data: [],
+            load: true
         }
     }
 
@@ -43,47 +46,16 @@ export default class ChatListComponent extends React.Component {
     }
 
     _loadData() {
-        const data = [
-            {
-                id: 1,
-                message: 'Hey, jadi engga',
-                time: '2m',
-                me: false
-            },
-            {
-                id: 2,
-                message: 'Jadi kemana ?',
-                time: '1m',
-                me: true
-            },
-            {
-                id: 3,
-                message: 'Ke tempat indah, acara ultah',
-                time: '1m',
-                me: false
-            },
-            {
-                id: 4,
-                message: 'Kuy, mandi dulu',
-                time: '30s',
-                me: true
-            },
-            {
-                id: 5,
-                message: 'Cepetan !!',
-                time: 'now',
-                me: false
-            }
-        ]
+        var index = chatData.findIndex(x => x.id == this.props.dataChat.id);
         setTimeout(() => {
-            this.setState({ data: data })
+            this.setState({ data: index > -1 ? chatData[index].chat : [], load: false })
         }, 500)
     }
 
     _sendChat() {
         const nData = this.state.data;
         nData.push({
-            id: Math.floor(this.state.data[this.state.data.length - 1].id + 1),
+            id: Math.floor(this.state.data.length ? this.state.data[this.state.data.length - 1].id + 1 : 1),
             message: this.state.chat,
             time: 'now',
             me: true
@@ -97,6 +69,10 @@ export default class ChatListComponent extends React.Component {
 
         return (
             <SafeAreaView style={{ height: '100%' }}>
+                {this.state.load ?
+                    <ActivityIndicator size="large" color={constStyle.baseColor} style={{marginTop:20}} />
+                    : null
+                }
 
                 <FlatList
                     data={this.state.data}

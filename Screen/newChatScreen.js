@@ -7,7 +7,7 @@ import React, {
   
   
   function onItemTap(nav, item) {
-    nav.navigate('ChatRoom',{ item: item })
+    nav.navigate('Profile',{ item: item })
   }
   
   export function NewChatScreen({ navigation }) {

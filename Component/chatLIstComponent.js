@@ -11,19 +11,23 @@ import {
     TouchableOpacity
 } from 'react-native';
 import { DefaultText } from '../BaseComponent/defaultText';
+import { randColor } from '../BaseComponent/constStyle';
+import { chatData } from '../Source/sample';
 
 function listItem(data, props) {
     return (
         <TouchableOpacity style={{ flexDirection: 'row', padding: 10 }} onPress={() => props(data.item)}>
-            <View style={styles.avaWrapper}>
+            <View style={[styles.avaWrapper,{backgroundColor: randColor()}]}>
                 <View style={[styles.onlineIndicator, { backgroundColor: data.item.online ? 'limegreen' : 'lightgrey' }]}></View>
             </View>
             <View style={styles.contentWrapper}>
                 <View style={{ flex: 1 }}>
                     <DefaultText text={data.item.name} level={2} />
-                    <DefaultText text={data.item.message} level={0} state="deactive" />
+                    <Text style={{color:'darkgrey',fontSize:13}} numberOfLines={2}>
+                        {data.item.chat[data.item.chat.length-1].message}
+                    </Text>
                 </View>
-                <DefaultText text={data.item.time} level={0} />
+                <DefaultText text={data.item.chat[data.item.chat.length-1].time} level={0} />
             </View>
         </TouchableOpacity>
     )
@@ -37,33 +41,10 @@ function listSeparator() {
 
 export default class ChatListComponent extends React.Component {
     render() {
-        const data = [
-            {
-                id: 1,
-                name: 'Bayu',
-                message: 'Hey, ayo pergi !',
-                time: '2m',
-                online: true
-            },
-            {
-                id: 2,
-                name: 'Ayana',
-                message: 'Aku sudah mengerti',
-                time: '1m',
-                online: false
-            },
-            {
-                id: 3,
-                name: 'Pak Bejo',
-                message: 'Sudah saya tunggu loh angsuran nya',
-                time: '2h',
-                online: false
-            }
-        ]
         return (
             <SafeAreaView style={{backgroundColor:'white',flex:1}}>
                 <FlatList
-                    data={data}
+                    data={chatData}
                     renderItem={item => listItem(item, this.props.onItemTap)}
                     style={styles.flatlistStyle}
                     keyExtractor={item => item.id}
@@ -83,7 +64,6 @@ const styles = StyleSheet.create({
     avaWrapper: {
         width: 50,
         height: 50,
-        backgroundColor: 'darkgrey',
         borderRadius: 50 / 2
     },
     onlineIndicator: {

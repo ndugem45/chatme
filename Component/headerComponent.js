@@ -17,7 +17,7 @@ export function HeaderComponent({ scene, previous, navigation }) {
 
     return (
         <View style={[styles.headerContainer, constStyle.shadow.depth3]}>
-            <StatusBar backgroundColor={'white'} barStyle="dark-content" />
+            <StatusBar translucent backgroundColor='transparent' barStyle={'dark-content'} />
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                 <Icon name="flower" size={20} color={constStyle.baseColor} style={{ marginRight: 5 }} />
                 <DefaultText text='ChatMe' level={1} color={constStyle.baseColor} />
@@ -28,10 +28,9 @@ export function HeaderComponent({ scene, previous, navigation }) {
 
 export function HeaderComponentBasic({ scene, previous, navigation }) {
     const option = scene.route
-
     return (
         <View style={[styles.headerContainer, constStyle.shadow.depth3]}>
-            <StatusBar backgroundColor={'white'} barStyle="dark-content" />
+            <StatusBar translucent backgroundColor='transparent' barStyle={'dark-content'} />
 
             <View style={{ flex: 1, flexDirection: 'row', paddingHorizontal: 20 }}>
                 <View style={[styles.headerItemWrapper]}>
@@ -56,7 +55,7 @@ export function HeaderComponentBack({ scene, previous, navigation }) {
 
     return (
         <View style={[styles.headerContainer, constStyle.shadow.depth3]}>
-            <StatusBar backgroundColor={'white'} barStyle="dark-content" />
+            <StatusBar translucent backgroundColor='transparent' barStyle={'dark-content'} />
 
             <View style={{ flex: 1, flexDirection: 'row', paddingHorizontal: 20 }}>
                 <View style={[styles.headerItemWrapper]}>
@@ -80,9 +79,10 @@ export function HeaderComponentBack({ scene, previous, navigation }) {
 const styles = StyleSheet.create({
     headerContainer: {
         backgroundColor: 'white',
-        height: 50,
+        height: 70,
         borderBottomLeftRadius: 20,
-        borderBottomRightRadius: 20
+        borderBottomRightRadius: 20,
+        paddingTop:20
     },
     headerItemWrapper: {
         flex: 1,

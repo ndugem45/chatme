@@ -47,8 +47,7 @@ export default function App() {
           name="Profile"
           component={ProfileScreen}
           options={{
-            header: ({ scene, previous, navigation }) => HeaderComponentBack({ scene, previous, navigation }),
-            cardStyle: { backgroundColor: 'white' }
+            headerShown: false
           }} />
         <Stack.Screen
           name="Notification"

@@ -2,6 +2,10 @@ import {
     StyleSheet
 } from 'react-native';
 
+export function randColor(){
+    return 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+}
+
 export const constStyle = {
     baseColor: '#00A1E1',
     shadow: StyleSheet.create({

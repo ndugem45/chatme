@@ -10,6 +10,6 @@ import ChatRoomComponent from '../Component/chatRoomComponent';
 export function ChatRoomScreen({ route, navigation }) {
     // console.log(route.params.item)
     return (
-        <ChatRoomComponent></ChatRoomComponent>
+        <ChatRoomComponent dataChat={route.params.item}></ChatRoomComponent>
     );
 }
