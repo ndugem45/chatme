@@ -14,13 +14,13 @@ import {
 import { DefaultText } from '../BaseComponent/defaultText';
 import { randColor } from '../BaseComponent/constStyle';
 import { chatData } from '../Source/sample';
-import { avatar } from '../Source/avatar';
+import { avatar, backGender } from '../Source/avatar';
 
 function listItem(data, props) {
     return (
         <TouchableOpacity style={{ flexDirection: 'row', padding: 10 }} onPress={() => props(data.item)}>
             <View style={[styles.onlineIndicator, { backgroundColor: data.item.online ? 'limegreen' : 'lightgrey' }]}></View>
-            <View style={[styles.avaWrapper]}>
+            <View style={[styles.avaWrapper, { backgroundColor: data.item.gender == 1 ? backGender.male : backGender.female, borderColor: data.item.gender == 1 ? backGender.male : backGender.female }]}>
                 <Image source={avatar[data.item.ava]} style={{ width: 50, height: 50 }} resizeMode={'cover'} />
             </View>
 
@@ -69,10 +69,8 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         borderRadius: 50 / 2,
-        backgroundColor: 'aliceblue',
         overflow: "hidden",
         borderWidth: 2,
-        borderColor: 'aliceblue',
         justifyContent: 'center',
         alignItems: 'center'
     },

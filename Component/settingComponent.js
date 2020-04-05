@@ -15,14 +15,14 @@ import Icon from 'react-native-vector-icons/Entypo';
 import { DefaultText } from '../BaseComponent/defaultText';
 import { constStyle, randColor } from '../BaseComponent/constStyle';
 import { myProfile } from '../Source/sample';
-import { avatar } from '../Source/avatar';
+import { avatar, backGender } from '../Source/avatar';
 
 export default class SettingComponent extends React.Component {
     render() {
         return (
             <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
                 <TouchableOpacity style={{ backgroundColor: constStyle.baseColor, padding: 10, marginTop: 30, marginHorizontal: 10, borderRadius: 10, flexDirection: 'row', marginBottom: 20 }} onPress={() => this.props.onTapProfile()}>
-                    <View style={{ width: 70, height: 70, borderRadius: 70 / 2, backgroundColor: 'aliceblue', overflow: "hidden", borderWidth: 2, borderColor: 'aliceblue', justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={{ width: 70, height: 70, borderRadius: 70 / 2, backgroundColor: myProfile.gender == 1 ? backGender.male : backGender.female, overflow: "hidden", borderWidth: 2, borderColor: myProfile.gender == 1 ? backGender.male : backGender.female, justifyContent: 'center', alignItems: 'center' }}>
                         <Image source={avatar[myProfile.ava]} style={{ width: 70, height: 70 }} resizeMode={'cover'} />
                     </View>
 

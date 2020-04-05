@@ -30,3 +30,8 @@ export const avatar = {
     'female-14': require('../Source/asset/avatar/female-14.png'),
     'female-15': require('../Source/asset/avatar/female-15.png')
 }
+
+export const backGender = {
+    male: 'aliceblue',
+    female: 'lightcoral'
+}

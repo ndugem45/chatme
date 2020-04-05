@@ -15,7 +15,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 import { DefaultText } from '../BaseComponent/defaultText';
 import { constStyle, randColor } from '../BaseComponent/constStyle';
 import { myProfile } from '../Source/sample';
-import { avatar } from '../Source/avatar';
+import { avatar, backGender } from '../Source/avatar';
 
 export default class ProfileComponent extends React.Component {
     constructor(props) {
@@ -44,7 +44,8 @@ export default class ProfileComponent extends React.Component {
                 </TouchableOpacity>
 
                 <View style={{ backgroundColor: randColor(), height: 250 }}></View>
-                <View style={{ width: 90, height: 90, borderRadius: 90 / 2, alignSelf: 'center', top: -70 / 2, backgroundColor: 'aliceblue', overflow: "hidden", borderWidth: 2, borderColor: 'aliceblue', justifyContent: 'center', alignItems: 'center' }}>
+
+                <View style={{ width: 90, height: 90, borderRadius: 90 / 2, alignSelf: 'center', top: -70 / 2, backgroundColor: this.state.userData.gender == 1 ? backGender.male : backGender.female, overflow: "hidden", borderWidth: 2, borderColor: this.state.userData.gender == 1 ? backGender.male : backGender.female, justifyContent: 'center', alignItems: 'center' }}>
                     <Image source={avatar[this.state.userData.ava]} style={{ width: 90, height: 90 }} resizeMode={'cover'} />
                 </View>
 
