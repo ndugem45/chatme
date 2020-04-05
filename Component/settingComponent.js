@@ -9,7 +9,8 @@ import {
     Button,
     FlatList,
     TouchableOpacity,
-    Image
+    Image,
+    Alert
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import { DefaultText } from '../BaseComponent/defaultText';
@@ -57,7 +58,16 @@ export default class SettingComponent extends React.Component {
                     </TouchableOpacity>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{ backgroundColor: 'aliceblue', padding: 10, flexDirection: 'row' }}>
+                <TouchableOpacity style={{ backgroundColor: 'aliceblue', padding: 10, flexDirection: 'row' }} onPress={() => {
+                    Alert.alert(
+                        "ChatMe",
+                        "Version 1.0.0",
+                        [
+                            { text: "OK", onPress: () => console.log("OK Pressed") }
+                        ],
+                        { cancelable: false }
+                    );
+                }}>
                     <Icon name="help" size={20} color={constStyle.baseColor} />
                     <View style={{ flex: 1, marginHorizontal: 5 }}>
                         <DefaultText text="About" level={2} />

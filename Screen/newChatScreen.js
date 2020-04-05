@@ -12,7 +12,7 @@ import React, {
   
   export function NewChatScreen({ navigation }) {
     return (
-      <NewChatComponent onItemTap={(item) => onItemTap(navigation, item)} ></NewChatComponent>
+      <NewChatComponent onItemTap={(item) => onItemTap(navigation, item)} onBackTap={() => navigation.goBack()}></NewChatComponent>
     );
   }
   

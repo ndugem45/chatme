@@ -40,8 +40,7 @@ export default function App() {
           name="NewChat"
           component={NewChatScreen}
           options={{
-            header: ({ scene, previous, navigation }) => HeaderComponentBack({ scene, previous, navigation }),
-            cardStyle: { backgroundColor: 'white' }
+            headerShown: false
           }} />
         <Stack.Screen
           name="Profile"

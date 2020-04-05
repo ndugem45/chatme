@@ -48,8 +48,14 @@ export default class NewChatComponent extends React.Component {
     render() {
         return (
             <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
-                <Text style={{ paddingHorizontal: 40, fontSize: 20, marginVertical: 10 }}>
-                    Someone Near You
+                <StatusBar translucent backgroundColor="transparent" barStyle={'dark-content'} ></StatusBar>
+
+                <TouchableOpacity style={[styles.floatBtn, { left: 20 }]} onPress={() => this.props.onBackTap()}>
+                    <Icon name="chevron-left" size={25} color={constStyle.baseColor} />
+                </TouchableOpacity>
+
+                <Text style={{ height: 120, paddingHorizontal: 40, fontSize: 20, color: constStyle.baseColor, textAlign: 'center',backgroundColor:'aliceblue',paddingTop:80 }}>
+                    <Icon name="location" size={20} color={constStyle.baseColor} /> Someone Near You
                 </Text>
 
                 <FlatList
@@ -67,5 +73,15 @@ export default class NewChatComponent extends React.Component {
 
 
 const styles = StyleSheet.create({
-
+    floatBtn: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'white',
+        width: 40,
+        height: 40,
+        borderRadius: 40 / 2,
+        position: 'absolute',
+        zIndex: 10,
+        top: 30
+    }
 });
