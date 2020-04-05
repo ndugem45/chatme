@@ -27,7 +27,7 @@ function chatItem(data, optFunc, replyFunc, moveToMsg, itemHeight) {
     return (
         <View style={[{ justifyContent: data.me ? 'flex-end' : 'flex-start' }, styles.chatContainer]} onLayout={object => itemHeight(object.nativeEvent.layout.height)}>
             {data.me ? null :
-                <Animated.View style={{ width: 40, marginLeft: data.margin, flexDirection: 'row', opacity: data.opacity, justifyContent: 'center', alignItems: 'center' }}>
+                <Animated.View style={{ width: 40, marginRight: data.margin, flexDirection: 'row', opacity: data.opacity, justifyContent: 'center', alignItems: 'center' }}>
                     <TouchableOpacity onPress={() => replyFunc(data)}>
                         <Text style={{ color: constStyle.baseColor }}>
                             Reply
@@ -50,6 +50,15 @@ function chatItem(data, optFunc, replyFunc, moveToMsg, itemHeight) {
                     <DefaultText text={data.time} smallText={true} state="deactive" align={data.me ? 'right' : 'left'} color={data.me ? 'white' : ''} />
                 </View>
             </TouchableWithoutFeedback>
+            {data.me ?
+                <Animated.View style={{ width: 40, marginLeft: data.margin, flexDirection: 'row', opacity: data.opacity, justifyContent: 'center', alignItems: 'center' }}>
+                    <TouchableOpacity onPress={() => replyFunc(data)}>
+                        <Text style={{ color: constStyle.baseColor }}>
+                            Reply
+                        </Text>
+                    </TouchableOpacity>
+                </Animated.View>
+            : null }
         </View>
     )
 }
@@ -121,6 +130,8 @@ export default class ChatListComponent extends React.Component {
                 message: this.state.chat,
                 time: 'now',
                 me: true,
+                margin: new Animated.Value(-40),
+                opacity: new Animated.Value(0),
                 reply: this.state.replyData ? this.state.replyData : false 
             })
             this.setState({ replyData: null })

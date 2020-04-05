@@ -1,7 +1,7 @@
 export const myProfile = {
     name: 'My name is Tom',
     greeting: "Hi there !, im using chatme right now. Let's talk more ... #cheers",
-    ava: null,
+    ava: 'male-1',
     photos: [],
     id: 1,
     distance: 0
@@ -12,7 +12,7 @@ export const userData = [
         id: 2,
         name: 'Wahyu',
         greeting: "Hi there !",
-        ava: null,
+        ava: 'male-12',
         photos: [],
         distance: '1m'
     },
@@ -20,7 +20,7 @@ export const userData = [
         id: 3,
         name: 'Bayu',
         greeting: "Hi there !",
-        ava: null,
+        ava: 'male-4',
         photos: [],
         distance: '1m'
     },
@@ -28,7 +28,7 @@ export const userData = [
         id: 4,
         name: 'Anna',
         greeting: "Hi there !",
-        ava: null,
+        ava: 'female-5',
         photos: [],
         distance: '45m'
     },
@@ -36,7 +36,7 @@ export const userData = [
         id: 5,
         name: 'Yolla',
         greeting: "Hi there !",
-        ava: null,
+        ava: 'female-11',
         photos: [],
         distance: '2km'
     },
@@ -44,7 +44,7 @@ export const userData = [
         id: 6,
         name: 'Bagas',
         greeting: "Hi there !",
-        ava: null,
+        ava: 'male-4',
         photos: [],
         distance: '2.4km'
     },
@@ -52,7 +52,7 @@ export const userData = [
         id: 7,
         name: 'Bejo',
         greeting: "Hi there !",
-        ava: null,
+        ava: 'male-9',
         photos: [],
         distance: '3.2km'
     }
@@ -62,6 +62,7 @@ export const chatData = [
     {
         id: 2,
         name: 'Wahyu',
+        ava: 'male-12',
         online: true,
         chat: [
             {
@@ -137,6 +138,7 @@ export const chatData = [
     {
         id: 5,
         name: 'Yolla',
+        ava: 'female-11',
         online: false,
         chat: [{
             id: 1,

@@ -8,12 +8,14 @@ import {
     StatusBar,
     Button,
     FlatList,
-    TouchableOpacity
+    TouchableOpacity,
+    Image
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import { DefaultText } from '../BaseComponent/defaultText';
 import { constStyle, randColor } from '../BaseComponent/constStyle';
 import { myProfile } from '../Source/sample';
+import { avatar } from '../Source/avatar';
 
 export default class ProfileComponent extends React.Component {
     constructor(props) {
@@ -42,9 +44,10 @@ export default class ProfileComponent extends React.Component {
                 </TouchableOpacity>
 
                 <View style={{ backgroundColor: randColor(), height: 250 }}></View>
-                <View style={{ backgroundColor: randColor(), width: 70, height: 70, borderRadius: 70 / 2, alignSelf: 'center', top: -70 / 2 }}>
-
+                <View style={{ width: 90, height: 90, borderRadius: 90 / 2, alignSelf: 'center', top: -70 / 2, backgroundColor: 'aliceblue', overflow: "hidden", borderWidth: 2, borderColor: 'aliceblue', justifyContent: 'center', alignItems: 'center' }}>
+                    <Image source={avatar[this.state.userData.ava]} style={{ width: 90, height: 90 }} resizeMode={'cover'} />
                 </View>
+
                 <View style={{ flex: 1, alignItems: 'center' }}>
                     <Text style={{ fontSize: 20 }}>
                         {this.state.userData.name}

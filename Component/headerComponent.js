@@ -36,7 +36,10 @@ export function HeaderComponentBasic({ scene, previous, navigation }) {
                 <View style={[styles.headerItemWrapper]}>
                     <TouchableOpacity onPress={() => navigation.goBack()} style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Icon name="chevron-left" size={25} color={constStyle.baseColor} />
-                        <DefaultText text={option.params.item.name} level={1} color={constStyle.baseColor} />
+                        <View>
+                            <DefaultText text={option.params.item.name} level={1} color={constStyle.baseColor} />
+                            {option.params.item.online ? <DefaultText text={'Online'} smallText={true} color={'grey'} /> : null}
+                        </View>
                     </TouchableOpacity>
                 </View>
                 <View style={[styles.headerItemWrapper, { alignItems: 'flex-end' }]}>
