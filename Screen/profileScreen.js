@@ -4,7 +4,7 @@ import React, {
 } from 'react';
 
 import ProfileComponent from '../Component/profileComponent';
-import { myProfile } from '../Source/sample';
+import store from '../Source/store';
 
 
 function onBackTap(nav) {
@@ -12,7 +12,7 @@ function onBackTap(nav) {
 }
 
 function profileData(route) {
-    return route.params ? route.params.item : myProfile
+    return route.params ? route.params.item : store.getState().myProfile
 }
 
 function onChat(nav, item) {

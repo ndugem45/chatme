@@ -4,11 +4,15 @@ import {
     StatusBar,
     View,
     StyleSheet,
+    Alert,
     TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import { DefaultText } from '../BaseComponent/defaultText';
 import { constStyle } from '../BaseComponent/constStyle';
+import ActionSheet from 'react-native-action-sheet';
+import store from '../Source/store';
+import actions from '../Source/actions';
 
 
 
@@ -26,7 +30,26 @@ export function HeaderComponent({ scene, previous, navigation }) {
     );
 }
 
-export function HeaderComponentBasic({ scene, previous, navigation }) {
+function _optChat(option, navi, optIndex) {
+    switch (parseInt(optIndex)) {
+        case 0:
+            navi.navigate("Profile", { item: option.params.item })
+            break;
+        case 1:
+            var index = store.getState().chatData.findIndex(x => x.id == option.params.item.id)
+            if (index > -1) {
+                var old = [...store.getState().chatData]
+                old.splice(index, 1);
+                store.dispatch(actions("ChatData", old))
+                navi.goBack()
+            }
+            break;
+        case 2:
+            break;
+    }
+}
+
+export function HeaderComponentChat({ scene, previous, navigation }) {
     const option = scene.route
     return (
         <View style={[styles.headerContainer, constStyle.shadow.depth3]}>
@@ -43,7 +66,27 @@ export function HeaderComponentBasic({ scene, previous, navigation }) {
                     </TouchableOpacity>
                 </View>
                 <View style={[styles.headerItemWrapper, { alignItems: 'flex-end' }]}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+
+                        var BtnOptChat = [
+                            'Lihat Profil',
+                            'Hapus Semua Pesan',
+                            'Blokir Pengguna ini'
+                        ];
+
+                        var DESTRUCTIVE_INDEX = 3;
+                        var CANCEL_INDEX = 4;
+
+                        ActionSheet.showActionSheetWithOptions({
+                            options: BtnOptChat,
+                            cancelButtonIndex: CANCEL_INDEX,
+                            destructiveButtonIndex: DESTRUCTIVE_INDEX,
+                            tintColor: 'blue'
+                        },
+                            (buttonIndex) => {
+                                _optChat(option, navigation, buttonIndex)
+                            });
+                    }}>
                         <Icon name="dots-three-vertical" size={20} color={constStyle.baseColor} />
                     </TouchableOpacity>
                 </View>
@@ -85,7 +128,7 @@ const styles = StyleSheet.create({
         height: 70,
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
-        paddingTop:20
+        paddingTop: 20
     },
     headerItemWrapper: {
         flex: 1,

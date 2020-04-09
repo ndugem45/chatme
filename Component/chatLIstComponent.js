@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { DefaultText } from '../BaseComponent/defaultText';
 import { randColor } from '../BaseComponent/constStyle';
-import { chatData } from '../Source/sample';
+import store from '../Source/store';
 import { avatar, backGender } from '../Source/avatar';
 
 function listItem(data, props) {
@@ -28,10 +28,10 @@ function listItem(data, props) {
                 <View style={{ flex: 1 }}>
                     <DefaultText text={data.item.name} level={2} />
                     <Text style={{ color: 'darkgrey', fontSize: 13 }} numberOfLines={2}>
-                        {data.item.chat[data.item.chat.length - 1].message}
+                        {data.item.chat[0].message}
                     </Text>
                 </View>
-                <DefaultText text={data.item.chat[data.item.chat.length - 1].time} level={0} />
+                <DefaultText text={data.item.chat[0].time} level={0} />
             </View>
         </TouchableOpacity>
     )
@@ -44,11 +44,25 @@ function listSeparator() {
 }
 
 export default class ChatListComponent extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            chatData: []
+        }
+    }
+    componentDidMount() {
+        this.setState({ chatData: store.getState().chatData })
+        store.subscribe(() => {
+            this.setState({ chatData: store.getState().chatData })
+            console.log("update chat ", store.getState().chatData)
+        })
+    }
+
     render() {
         return (
             <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
                 <FlatList
-                    data={chatData}
+                    data={this.state.chatData}
                     renderItem={item => listItem(item, this.props.onItemTap)}
                     style={styles.flatlistStyle}
                     keyExtractor={item => item.id}

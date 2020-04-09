@@ -19,7 +19,8 @@ import {
 import Icon from 'react-native-vector-icons/Entypo';
 import { DefaultText } from '../BaseComponent/defaultText';
 import { constStyle } from '../BaseComponent/constStyle';
-import { chatData } from '../Source/sample';
+import store from '../Source/store';
+import actions from '../Source/actions';
 
 
 
@@ -35,7 +36,7 @@ function chatItem(data, optFunc, replyFunc, moveToMsg, itemHeight) {
                     </TouchableOpacity>
                 </Animated.View>
             }
-            <TouchableWithoutFeedback onPress={() => optFunc(data)}>
+            <TouchableWithoutFeedback onPress={() => optFunc(data)} style={{ zIndex: 2 }}>
                 <View style={[{ backgroundColor: data.me ? constStyle.baseColor : 'whitesmoke' }, styles.itemWrapper]}>
                     {data.reply ?
                         <TouchableOpacity style={{ backgroundColor: 'lightgrey', padding: 5, borderRadius: 5 }} onPress={() => moveToMsg(data)}>
@@ -58,7 +59,7 @@ function chatItem(data, optFunc, replyFunc, moveToMsg, itemHeight) {
                         </Text>
                     </TouchableOpacity>
                 </Animated.View>
-            : null }
+                : null}
         </View>
     )
 }
@@ -68,6 +69,7 @@ export default class ChatListComponent extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            chatIndex: -1,
             chat: '',
             data: [],
             load: true,
@@ -75,7 +77,8 @@ export default class ChatListComponent extends React.Component {
             replyData: null,
             replyDialog: {
                 opacity: new Animated.Value(1)
-            }
+            },
+            optChat: store.getState().optChat
         }
         this.itemHeight = []
     }
@@ -99,12 +102,16 @@ export default class ChatListComponent extends React.Component {
         this.backHandler.remove();
     }
 
+
+
+
+
     _loadData() {
-        var index = chatData.findIndex(x => x.id == this.props.dataChat.id);
+        var index = store.getState().chatData.findIndex(x => x.id == this.props.dataChat.id);
         setTimeout(() => {
             if (index > -1) {
-                this._fillAnimValue(chatData[index].chat, (arr) => {
-                    this.setState({ data: arr, load: false })
+                this._fillAnimValue(store.getState().chatData[index].chat, (arr) => {
+                    this.setState({ data: arr, load: false, chatIndex: index })
                 })
             } else {
                 this.setState({ load: false })
@@ -132,12 +139,23 @@ export default class ChatListComponent extends React.Component {
                 me: true,
                 margin: new Animated.Value(-40),
                 opacity: new Animated.Value(0),
-                reply: this.state.replyData ? this.state.replyData : false 
+                reply: this.state.replyData ? this.state.replyData : false
             })
             this.setState({ replyData: null })
             this._showOptAnim(false, this.state.optData)
             this.setState({ chat: '' })
             this.setState({ data: nData })
+
+            var old = [...store.getState().chatData]
+            if (this.state.chatIndex < 0) {
+                var n = this.props.dataChat
+                n.chat = this.state.data
+                old.push(this.props.dataChat)
+            }else{
+                old[this.state.chatIndex].chat = this.state.data
+            }
+
+            store.dispatch(actions("ChatData", old))
             this.flatList.scrollToIndex({ animated: true, index: 0 })
         }
     }
@@ -176,7 +194,6 @@ export default class ChatListComponent extends React.Component {
 
     }
 
-
     _optMsg(data) {
         if (this.state.optData != null) {
             this._showOptAnim(false, this.state.optData.id == data.id ? data : this.state.optData)
@@ -206,18 +223,20 @@ export default class ChatListComponent extends React.Component {
         }
     }
 
-    getItemLayout = (data, index) => {
-        var length = this.itemHeight[index] ? this.itemHeight[index] : 58 
+    _getItemLayout = (data, index) => {
+        var length = this.itemHeight[index] ? this.itemHeight[index] : 58
         var offset = length * index
         return (
             { length: length, offset: offset, index }
         )
     }
 
+
     render() {
 
         return (
             <SafeAreaView style={{ height: '100%' }}>
+
                 {this.state.load ?
                     <ActivityIndicator size="large" color={constStyle.baseColor} style={{ marginTop: 20 }} />
                     : null
@@ -231,7 +250,7 @@ export default class ChatListComponent extends React.Component {
                         this.itemHeight[dt.index] = Math.round(height)
                     })}
                     keyExtractor={(item, index) => index}
-                    getItemLayout={this.getItemLayout}
+                    getItemLayout={this._getItemLayout}
                 />
 
                 <View style={[styles.textBoxContainer, constStyle.shadow.depth2]}>

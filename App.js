@@ -12,13 +12,26 @@ import { NewChatScreen } from './Screen/newChatScreen';
 import { ProfileScreen } from './Screen/profileScreen';
 import { NotificationScreen } from './Screen/notificationScreen';
 
-import { HeaderComponent, HeaderComponentBasic, HeaderComponentBack } from './Component/headerComponent';
+import { HeaderComponent, HeaderComponentChat, HeaderComponentBack } from './Component/headerComponent';
+
+import store from './Source/store';
+import actions from './Source/actions';
+import { myProfile, userData, chatData } from './Source/sample';
 
 const Stack = createStackNavigator();
 
 
 
 export default function App() {
+
+  useEffect(() => {
+    console.log("first load . . .")
+    store.dispatch(actions('MyProfile', myProfile));
+    store.dispatch(actions('UserData', userData));
+    store.dispatch(actions('ChatData', chatData));
+    console.log(". . . end first load")
+  });
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="TabNav">
@@ -33,7 +46,7 @@ export default function App() {
           name="ChatRoom"
           component={ChatRoomScreen}
           options={{
-            header: ({ scene, previous, navigation }) => HeaderComponentBasic({ scene, previous, navigation }),
+            header: ({ scene, previous, navigation }) => HeaderComponentChat({ scene, previous, navigation }),
             cardStyle: { backgroundColor: 'white' }
           }} />
         <Stack.Screen

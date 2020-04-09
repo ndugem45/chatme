@@ -4,10 +4,12 @@ import React, {
 } from 'react';
 
 import ChatListComponent from '../Component/chatLIstComponent';
+import store from '../Source/store';
+import actions from '../Source/actions';
 
 
 function onItemTap(nav, item) {
-  nav.navigate('ChatRoom',{ item: item })
+  nav.navigate('ChatRoom', { item: item })
 }
 
 export function ChatListScreen({ navigation }) {

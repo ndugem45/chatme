@@ -14,7 +14,7 @@ import {
 import Icon from 'react-native-vector-icons/Entypo';
 import { DefaultText } from '../BaseComponent/defaultText';
 import { constStyle, randColor } from '../BaseComponent/constStyle';
-import { myProfile } from '../Source/sample';
+import store from '../Source/store';
 import { avatar, backGender } from '../Source/avatar';
 
 export default class ProfileComponent extends React.Component {
@@ -27,7 +27,7 @@ export default class ProfileComponent extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({ userData: this.props.userData(), me: this.props.userData().id == myProfile.id ? true : false })
+        this.setState({ userData: this.props.userData(), me: this.props.userData().id == store.getState().myProfile.id ? true : false })
     }
 
     render() {
