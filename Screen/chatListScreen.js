@@ -14,6 +14,6 @@ function onItemTap(nav, item) {
 
 export function ChatListScreen({ navigation }) {
   return (
-    <ChatListComponent onItemTap={(item) => onItemTap(navigation, item)} ></ChatListComponent>
+    <ChatListComponent onItemTap={(item) => onItemTap(navigation, item)} navi={navigation}></ChatListComponent>
   );
 }

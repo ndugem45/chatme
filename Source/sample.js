@@ -49,7 +49,7 @@ export const userData = [
         id: 6,
         name: 'Bagas',
         greeting: "Hi there !",
-        ava: 'male-4',
+        ava: 'male-14',
         photos: [],
         distance: '2.4km',
         gender: 1
@@ -66,94 +66,94 @@ export const userData = [
 ]
 
 export const chatData = [
-    {
-        id: 2,
-        name: 'Wahyu',
-        ava: 'male-12',
-        gender: 1,
-        online: true,
-        chat: [
-            {
-                "id": 8,
-                "message": "Nohh",
-                "time": "now",
-                "me": true,
-                "reply": {
-                    "id": 4,
-                    "message": "Kuy, mandi dulu",
-                    "time": "30s",
-                    "me": true,
-                    "reply": false
-                }
-            },
-            {
-                "id": 7,
-                "message": "Nohh",
-                "time": "now",
-                "me": false,
-                "reply": {
-                    "id": 3,
-                    "message": "Acara ultah",
-                    "time": "1m",
-                    "me": false,
-                    "reply": false
-                }
-            },
-            {
-                "id": 6,
-                "message": "Mau kmn ?",
-                "time": "now",
-                "me": true,
-                "reply": false
-            },
-            {
-                "id": 5,
-                "message": "Cepetan !!",
-                "time": "now",
-                "me": false,
-                "reply": false
-            },
-            {
-                "id": 4,
-                "message": "Kuy, mandi dulu",
-                "time": "30s",
-                "me": true,
-                "reply": false
-            },
-            {
-                "id": 3,
-                "message": "Acara ultah",
-                "time": "1m",
-                "me": false,
-                "reply": false
-            },
-            {
-                "id": 2,
-                "message": "Jadi kemana ?",
-                "time": "1m",
-                "me": true,
-                "reply": false
-            },
-            {
-                "id": 1,
-                "message": "Hey, jadi engga",
-                "time": "2m",
-                "me": false,
-                "reply": false
-            }
-        ]
-    },
-    {
-        id: 5,
-        name: 'Yolla',
-        ava: 'female-11',
-        gender: 0,
-        online: false,
-        chat: [{
-            id: 1,
-            message: 'Hallo',
-            time: '2m',
-            me: false
-        }]
-    }
+    // {
+    //     id: 2,
+    //     name: 'Wahyu',
+    //     ava: 'male-12',
+    //     gender: 1,
+    //     online: true,
+    //     chat: [
+    //         {
+    //             "id": 8,
+    //             "message": "Nohh",
+    //             "time": "now",
+    //             "me": true,
+    //             "reply": {
+    //                 "id": 4,
+    //                 "message": "Kuy, mandi dulu",
+    //                 "time": "30s",
+    //                 "me": true,
+    //                 "reply": false
+    //             }
+    //         },
+    //         {
+    //             "id": 7,
+    //             "message": "Nohh",
+    //             "time": "now",
+    //             "me": false,
+    //             "reply": {
+    //                 "id": 3,
+    //                 "message": "Acara ultah",
+    //                 "time": "1m",
+    //                 "me": false,
+    //                 "reply": false
+    //             }
+    //         },
+    //         {
+    //             "id": 6,
+    //             "message": "Mau kmn ?",
+    //             "time": "now",
+    //             "me": true,
+    //             "reply": false
+    //         },
+    //         {
+    //             "id": 5,
+    //             "message": "Cepetan !!",
+    //             "time": "now",
+    //             "me": false,
+    //             "reply": false
+    //         },
+    //         {
+    //             "id": 4,
+    //             "message": "Kuy, mandi dulu",
+    //             "time": "30s",
+    //             "me": true,
+    //             "reply": false
+    //         },
+    //         {
+    //             "id": 3,
+    //             "message": "Acara ultah",
+    //             "time": "1m",
+    //             "me": false,
+    //             "reply": false
+    //         },
+    //         {
+    //             "id": 2,
+    //             "message": "Jadi kemana ?",
+    //             "time": "1m",
+    //             "me": true,
+    //             "reply": false
+    //         },
+    //         {
+    //             "id": 1,
+    //             "message": "Hey, jadi engga",
+    //             "time": "2m",
+    //             "me": false,
+    //             "reply": false
+    //         }
+    //     ]
+    // },
+    // {
+    //     id: 5,
+    //     name: 'Yolla',
+    //     ava: 'female-11',
+    //     gender: 0,
+    //     online: false,
+    //     chat: [{
+    //         id: 1,
+    //         message: 'Hallo',
+    //         time: '2m',
+    //         me: false
+    //     }]
+    // }
 ]

@@ -39,9 +39,8 @@ function _optChat(option, navi, optIndex) {
             var index = store.getState().chatData.findIndex(x => x.id == option.params.item.id)
             if (index > -1) {
                 var old = [...store.getState().chatData]
-                old.splice(index, 1);
+                old[index].chat = []
                 store.dispatch(actions("ChatData", old))
-                navi.goBack()
             }
             break;
         case 2:
@@ -69,9 +68,9 @@ export function HeaderComponentChat({ scene, previous, navigation }) {
                     <TouchableOpacity onPress={() => {
 
                         var BtnOptChat = [
-                            'Lihat Profil',
-                            'Hapus Semua Pesan',
-                            'Blokir Pengguna ini'
+                            'Profile',
+                            'Delete all message',
+                            'Block person'
                         ];
 
                         var DESTRUCTIVE_INDEX = 3;

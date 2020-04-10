@@ -21,6 +21,7 @@ import { DefaultText } from '../BaseComponent/defaultText';
 import { constStyle } from '../BaseComponent/constStyle';
 import store from '../Source/store';
 import actions from '../Source/actions';
+import { timeAgo } from '../Source/util'
 
 
 
@@ -43,12 +44,12 @@ function chatItem(data, optFunc, replyFunc, moveToMsg, itemHeight) {
                             <Text style={{ fontSize: 13, color: 'grey' }}>
                                 {data.reply.message}
                             </Text>
-                            <DefaultText text={data.reply.time} smallText={true} color='grey' />
+                            <DefaultText text={timeAgo(data.reply.time)} smallText={true} color='grey' />
                         </TouchableOpacity>
                         : null}
 
                     <DefaultText text={data.message} level={1} color={data.me ? 'white' : ''} />
-                    <DefaultText text={data.time} smallText={true} state="deactive" align={data.me ? 'right' : 'left'} color={data.me ? 'white' : ''} />
+                    <DefaultText text={timeAgo(data.time)} smallText={true} state="deactive" align={data.me ? 'right' : 'left'} color={data.me ? 'white' : ''} />
                 </View>
             </TouchableWithoutFeedback>
             {data.me ?
@@ -87,6 +88,11 @@ export default class ChatListComponent extends React.Component {
     componentDidMount() {
         const contex = this;
         this._loadData()
+        // store.subscribe(() => {
+        //     if(this.state.chatIndex > -1  && store.getState().chatData[this.state.chatIndex].chat != this.state.data){
+        //         this._loadData()
+        //     }
+        // })
         this.backHandler = BackHandler.addEventListener(
             "hardwareBackPress",
             () => {
@@ -100,6 +106,7 @@ export default class ChatListComponent extends React.Component {
 
     componentWillUnmount() {
         this.backHandler.remove();
+        // store.subscribe(() => {})
     }
 
 
@@ -116,7 +123,7 @@ export default class ChatListComponent extends React.Component {
             } else {
                 this.setState({ load: false })
             }
-        }, 500)
+        }, 200)
     }
 
     _fillAnimValue(arr, callback) {
@@ -133,29 +140,31 @@ export default class ChatListComponent extends React.Component {
         if (this.state.chat.length) {
             const nData = this.state.data;
             nData.unshift({
-                id: Math.floor(this.state.data.length ? this.state.data[this.state.data.length - 1].id + 1 : 1),
                 message: this.state.chat,
-                time: 'now',
+                time: Date.now(),
                 me: true,
                 margin: new Animated.Value(-40),
                 opacity: new Animated.Value(0),
                 reply: this.state.replyData ? this.state.replyData : false
             })
+            this.setState({ data: nData })
             this.setState({ replyData: null })
             this._showOptAnim(false, this.state.optData)
             this.setState({ chat: '' })
-            this.setState({ data: nData })
+            
 
             var old = [...store.getState().chatData]
             if (this.state.chatIndex < 0) {
                 var n = this.props.dataChat
                 n.chat = this.state.data
+                n.muted = false
                 old.push(this.props.dataChat)
-            }else{
+            } else {
                 old[this.state.chatIndex].chat = this.state.data
             }
 
             store.dispatch(actions("ChatData", old))
+            this.setState({ chatIndex: store.getState().chatData.findIndex(x => x.id == this.props.dataChat.id) })
             this.flatList.scrollToIndex({ animated: true, index: 0 })
         }
     }

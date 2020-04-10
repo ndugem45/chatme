@@ -14,7 +14,7 @@ export class DefaultText extends React.Component {
     }
 
     _fontSize() {
-        return this.props.level >= 4 ? this.state.size[2] : this.props.smallText ? 12 : this.state.size[this.props.level]
+        return this.props.level >= 4 ? this.state.size[2] : this.props.smallText ? 11 : this.state.size[this.props.level]
     }
 
     _color() {

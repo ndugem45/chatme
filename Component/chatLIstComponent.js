@@ -11,27 +11,39 @@ import {
     TouchableOpacity,
     Image
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Entypo';
 import { DefaultText } from '../BaseComponent/defaultText';
 import { randColor } from '../BaseComponent/constStyle';
 import store from '../Source/store';
+import actions from '../Source/actions';
 import { avatar, backGender } from '../Source/avatar';
+import { timeAgo } from '../Source/util'
+import ActionSheet from 'react-native-action-sheet';
 
-function listItem(data, props) {
+
+
+function listItem(data, props, longPress, avaTap) {
     return (
-        <TouchableOpacity style={{ flexDirection: 'row', padding: 10 }} onPress={() => props(data.item)}>
+        <TouchableOpacity style={{ flexDirection: 'row', padding: 10 }} onPress={() => props(data.item)} onLongPress={() => longPress()}>
             <View style={[styles.onlineIndicator, { backgroundColor: data.item.online ? 'limegreen' : 'lightgrey' }]}></View>
-            <View style={[styles.avaWrapper, { backgroundColor: data.item.gender == 1 ? backGender.male : backGender.female, borderColor: data.item.gender == 1 ? backGender.male : backGender.female }]}>
+            <TouchableOpacity style={[styles.avaWrapper, { backgroundColor: data.item.gender == 1 ? backGender.male : backGender.female, borderColor: data.item.gender == 1 ? backGender.male : backGender.female }]} onPress={() => avaTap()}>
                 <Image source={avatar[data.item.ava]} style={{ width: 50, height: 50 }} resizeMode={'cover'} />
-            </View>
+            </TouchableOpacity>
 
             <View style={styles.contentWrapper}>
                 <View style={{ flex: 1 }}>
                     <DefaultText text={data.item.name} level={2} />
                     <Text style={{ color: 'darkgrey', fontSize: 13 }} numberOfLines={2}>
-                        {data.item.chat[0].message}
+                        {data.item.chat.length ? data.item.chat[0].message : ''}
                     </Text>
                 </View>
-                <DefaultText text={data.item.chat[0].time} level={0} />
+                <View style={{alignItems:'center'}}>
+                    <DefaultText text={data.item.chat.length ? timeAgo(data.item.chat[0].time) : ''} level={0} />
+                    <Text>
+                        {data.item.muted ? <Icon name="sound-mute" size={15} color='dimgrey' /> : null}
+                    </Text>
+                </View>
+
             </View>
         </TouchableOpacity>
     )
@@ -54,8 +66,37 @@ export default class ChatListComponent extends React.Component {
         this.setState({ chatData: store.getState().chatData })
         store.subscribe(() => {
             this.setState({ chatData: store.getState().chatData })
-            console.log("update chat ", store.getState().chatData)
         })
+    }
+
+    _optList(data) {
+        var index = store.getState().chatData.findIndex(x => x.id == data.id)
+        var BtnOptChat = [
+            store.getState().chatData[index].muted ? 'Unmute chat' : 'Mute chat',
+            'Delete chat'
+        ];
+        var DESTRUCTIVE_INDEX = 3;
+        var CANCEL_INDEX = 4;
+        var contex = this;
+
+        ActionSheet.showActionSheetWithOptions({
+            options: BtnOptChat,
+            cancelButtonIndex: CANCEL_INDEX,
+            destructiveButtonIndex: DESTRUCTIVE_INDEX,
+            tintColor: 'blue'
+        },
+            (buttonIndex) => {
+
+                if (buttonIndex == 0) {
+                    var old = [...store.getState().chatData]
+                    old[index].muted = !old[index].muted
+                    store.dispatch(actions("ChatData", old))
+                } else if (buttonIndex == 1) {
+                    var old = [...store.getState().chatData]
+                    old.splice(index, 1);
+                    store.dispatch(actions("ChatData", old))
+                }
+            });
     }
 
     render() {
@@ -63,7 +104,7 @@ export default class ChatListComponent extends React.Component {
             <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
                 <FlatList
                     data={this.state.chatData}
-                    renderItem={item => listItem(item, this.props.onItemTap)}
+                    renderItem={item => listItem(item, this.props.onItemTap, () => this._optList(item.item), () => { this.props.navi.navigate("Profile", { item: item.item }) })}
                     style={styles.flatlistStyle}
                     keyExtractor={item => item.id}
                 />
