@@ -157,3 +157,12 @@ export const chatData = [
     //     }]
     // }
 ]
+
+export const blockList = [
+    {
+        id: 3,
+        name: 'Bayu',
+        ava: 'male-4',
+        gender: 1
+    }
+]

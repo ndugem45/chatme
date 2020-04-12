@@ -2,7 +2,9 @@ const initialState = {
     myProfile: {},
     userData: [],
     chatData: [],
+    blockList: [],
     optChat: -1,
+    socket: null,
 };
 
 const reducer = (prevState = initialState, action) => {
@@ -24,6 +26,14 @@ const reducer = (prevState = initialState, action) => {
             break;
         case 'ChatData':
             r.chatData = action.value;
+            return r;
+            break;
+        case 'BlockList':
+            r.blockList = action.value;
+            return r;
+            break;
+        case 'Socket':
+            r.socket = action.value;
             return r;
             break;
         default:

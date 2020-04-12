@@ -44,6 +44,22 @@ function _optChat(option, navi, optIndex) {
             }
             break;
         case 2:
+            var index = store.getState().chatData.findIndex(x => x.id == option.params.item.id)
+            var old = [...store.getState().blockList]
+            old.push({
+                id: option.params.item.id,
+                name: option.params.item.name,
+                ava: option.params.item.ava,
+                gender: option.params.item.gender
+            })
+            store.dispatch(actions("BlockList", old))
+
+            if (index > -1) {
+                old = [...store.getState().chatData]
+                old.splice(index, 1)
+                store.dispatch(actions("ChatData", old))
+                navi.goBack()
+            }
             break;
     }
 }

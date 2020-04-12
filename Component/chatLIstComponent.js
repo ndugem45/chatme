@@ -1,6 +1,7 @@
 import React from 'react';
 import {
     SafeAreaView,
+    ActivityIndicator,
     StyleSheet,
     ScrollView,
     View,
@@ -13,7 +14,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import { DefaultText } from '../BaseComponent/defaultText';
-import { randColor } from '../BaseComponent/constStyle';
+import { constStyle, randColor } from '../BaseComponent/constStyle';
 import store from '../Source/store';
 import actions from '../Source/actions';
 import { avatar, backGender } from '../Source/avatar';
@@ -31,13 +32,13 @@ function listItem(data, props, longPress, avaTap) {
             </TouchableOpacity>
 
             <View style={styles.contentWrapper}>
-                <View style={{ flex: 1 }}>
+                <View style={{ flex: 4 }}>
                     <DefaultText text={data.item.name} level={2} />
                     <Text style={{ color: 'darkgrey', fontSize: 13 }} numberOfLines={2}>
                         {data.item.chat.length ? data.item.chat[0].message : ''}
                     </Text>
                 </View>
-                <View style={{alignItems:'center'}}>
+                <View style={{ alignItems: 'center', flex: 1 }}>
                     <DefaultText text={data.item.chat.length ? timeAgo(data.item.chat[0].time) : ''} level={0} />
                     <Text>
                         {data.item.muted ? <Icon name="sound-mute" size={15} color='dimgrey' /> : null}
@@ -59,14 +60,18 @@ export default class ChatListComponent extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            chatData: []
+            chatData: [],
+            load: true
         }
     }
     componentDidMount() {
-        this.setState({ chatData: store.getState().chatData })
-        store.subscribe(() => {
+        setTimeout(() => {
             this.setState({ chatData: store.getState().chatData })
-        })
+            this.setState({ load: false })
+            this.unsub = store.subscribe(() => {
+                this.setState({ chatData: store.getState().chatData })
+            })
+        }, 500)
     }
 
     _optList(data) {
@@ -99,11 +104,23 @@ export default class ChatListComponent extends React.Component {
             });
     }
 
+    _sortList() {
+        return this.state.chatData.sort(function (a, b) {
+            return parseInt(b.chat.length ? b.chat[0].time : 0) - parseInt(a.chat.length ? a.chat[0].time : 0)
+        });
+    }
+
     render() {
         return (
             <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
+
+                {this.state.load ?
+                    <ActivityIndicator size="large" color={constStyle.baseColor} style={{ marginTop: 20 }} />
+                    : null
+                }
+
                 <FlatList
-                    data={this.state.chatData}
+                    data={this._sortList()}
                     renderItem={item => listItem(item, this.props.onItemTap, () => this._optList(item.item), () => { this.props.navi.navigate("Profile", { item: item.item }) })}
                     style={styles.flatlistStyle}
                     keyExtractor={item => item.id}

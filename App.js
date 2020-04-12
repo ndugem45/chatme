@@ -3,6 +3,7 @@ import React, {
   useEffect
 } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
+import io from 'socket.io-client';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -17,19 +18,31 @@ import { HeaderComponent, HeaderComponentChat, HeaderComponentBack } from './Com
 
 import store from './Source/store';
 import actions from './Source/actions';
-import { myProfile, userData, chatData } from './Source/sample';
+import { myProfile, userData, chatData, blockList } from './Source/sample';
+
+import { socketUrl } from './Source/util'
 
 const Stack = createStackNavigator();
 
 async function firstLoad(callback = () => { }) {
-  console.log("first load . . .")
+  // AsyncStorage.clear()
+  console.log(`first load @ ${new Date()}. . .`)
+
+  store.dispatch(actions('Socket', io(socketUrl)))
+
   var p = await AsyncStorage.getItem("MyProfile")
-  var u = await AsyncStorage.getItem("UserData");
-  var c = await AsyncStorage.getItem("ChatData");
   store.dispatch(actions('MyProfile', p ? JSON.parse(p) : myProfile));
+
+  var u = await AsyncStorage.getItem("UserData");
   store.dispatch(actions('UserData', u ? JSON.parse(u) : userData));
+
+  var c = await AsyncStorage.getItem("ChatData");
   store.dispatch(actions('ChatData', c ? JSON.parse(c) : chatData));
-  console.log(". . . end first load")
+
+  // var b = await AsyncStorage.getItem("BlockList")
+  store.dispatch(actions('BlockList', blockList));
+
+  console.log(`. . . end first load @ ${new Date()}`)
   callback(true)
 }
 
@@ -42,6 +55,7 @@ export default function App() {
         AsyncStorage.setItem("MyProfile", JSON.stringify(store.getState().myProfile))
         AsyncStorage.setItem("UserData", JSON.stringify(store.getState().userData))
         AsyncStorage.setItem("ChatData", JSON.stringify(store.getState().chatData))
+        // AsyncStorage.setItem("BlockList", JSON.stringify(store.getState().blockList))
       })
     })
   });
