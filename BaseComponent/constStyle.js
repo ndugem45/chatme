@@ -1,10 +1,12 @@
 import {
     StyleSheet
 } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 
-export function randColor(){
+export function randColor() {
     return 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
 }
+
 
 export const constStyle = {
     baseColor: '#00A1E1',

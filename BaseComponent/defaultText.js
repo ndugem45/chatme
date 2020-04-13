@@ -3,6 +3,7 @@ import {
     Text,
 } from 'react-native';
 import { constStyle } from './constStyle';
+import DeviceInfo from 'react-native-device-info';
 
 
 export class DefaultText extends React.Component {
@@ -12,6 +13,7 @@ export class DefaultText extends React.Component {
             size: [14, 16, 18, 20]
         };
     }
+    // getFontScale()
 
     _fontSize() {
         return this.props.level >= 4 ? this.state.size[2] : this.props.smallText ? 11 : this.state.size[this.props.level]

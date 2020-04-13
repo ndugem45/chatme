@@ -38,6 +38,8 @@ target 'chatMe' do
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
+  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
+
   target 'chatMeTests' do
     inherit! :search_paths
     # Pods for testing

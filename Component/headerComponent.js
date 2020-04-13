@@ -14,6 +14,7 @@ import ActionSheet from 'react-native-action-sheet';
 import store from '../Source/store';
 import actions from '../Source/actions';
 
+const fontScale = store.getState().fontScale
 
 
 export function HeaderComponent({ scene, previous, navigation }) {
@@ -23,7 +24,7 @@ export function HeaderComponent({ scene, previous, navigation }) {
         <View style={[styles.headerContainer, constStyle.shadow.depth3]}>
             <StatusBar translucent backgroundColor='transparent' barStyle={'dark-content'} />
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-                <Icon name="flower" size={20} color={constStyle.baseColor} style={{ marginRight: 5 }} />
+                <Icon name="flower" size={20*fontScale} color={constStyle.baseColor} style={{ marginRight: 5 }} />
                 <DefaultText text='ChatMe' level={1} color={constStyle.baseColor} />
             </View>
         </View>
@@ -73,7 +74,7 @@ export function HeaderComponentChat({ scene, previous, navigation }) {
             <View style={{ flex: 1, flexDirection: 'row', paddingHorizontal: 20 }}>
                 <View style={[styles.headerItemWrapper]}>
                     <TouchableOpacity onPress={() => navigation.goBack()} style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Icon name="chevron-left" size={25} color={constStyle.baseColor} />
+                        <Icon name="chevron-left" size={25*fontScale} color={constStyle.baseColor} />
                         <View>
                             <DefaultText text={option.params.item.name} level={1} color={constStyle.baseColor} />
                             {option.params.item.online ? <DefaultText text={'Online'} smallText={true} color={'grey'} /> : null}
@@ -102,7 +103,7 @@ export function HeaderComponentChat({ scene, previous, navigation }) {
                                 _optChat(option, navigation, buttonIndex)
                             });
                     }}>
-                        <Icon name="dots-three-vertical" size={20} color={constStyle.baseColor} />
+                        <Icon name="dots-three-vertical" size={20*fontScale} color={constStyle.baseColor} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -121,7 +122,7 @@ export function HeaderComponentBack({ scene, previous, navigation }) {
             <View style={{ flex: 1, flexDirection: 'row', paddingHorizontal: 20 }}>
                 <View style={[styles.headerItemWrapper]}>
                     <TouchableOpacity onPress={() => navigation.goBack()} style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Icon name="chevron-left" size={25} color={constStyle.baseColor} />
+                        <Icon name="chevron-left" size={25*fontScale} color={constStyle.baseColor} />
                         {/* <DefaultText text='Back' level={1} color={constStyle.baseColor} /> */}
                     </TouchableOpacity>
                 </View>

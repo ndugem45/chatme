@@ -4,6 +4,7 @@ import React, {
 } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import io from 'socket.io-client';
+import DeviceInfo from 'react-native-device-info';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -42,7 +43,12 @@ async function firstLoad(callback = () => { }) {
   // var b = await AsyncStorage.getItem("BlockList")
   store.dispatch(actions('BlockList', blockList));
 
-  console.log(`. . . end first load @ ${new Date()}`)
+
+  DeviceInfo.getFontScale().then(fontScale => {
+    store.dispatch(actions('Font', Math.round(fontScale)));
+  }),
+
+    console.log(`. . . end first load @ ${new Date()}`)
   callback(true)
 }
 
@@ -56,6 +62,50 @@ export default function App() {
         AsyncStorage.setItem("UserData", JSON.stringify(store.getState().userData))
         AsyncStorage.setItem("ChatData", JSON.stringify(store.getState().chatData))
         // AsyncStorage.setItem("BlockList", JSON.stringify(store.getState().blockList))
+      })
+
+      const socket = store.getState().socket
+
+      socket.on('connect', () => {
+        console.log('soc id', socket.id)
+        socket.emit('active', socket.id, store.getState().myProfile.id);
+      })
+
+      socket.on('personalMessage', (user, msg) => {
+        console.log('')
+        console.log('user =', user)
+        console.log('mess =', msg)
+        console.log('')
+        // const nData = contex.state.data;
+        // nData.unshift({
+        //     message: msg,
+        //     time: Date.now(),
+        //     me: false,
+        //     margin: new Animated.Value(-40),
+        //     opacity: new Animated.Value(0),
+        //     reply: false
+        // })
+        // contex.setState({ data: nData })
+
+        var old = [...store.getState().chatData]
+        var index = store.getState().chatData.findIndex(x => x.id == user);
+        var mess = {
+          message: msg,
+          time: Date.now(),
+          me: false,
+          reply: false
+        }
+
+        if (index > -1) {
+          old[index].chat.push(mess)
+        } else {
+          // var n = contex.props.dataChat
+          // n.chat = mess
+          // n.muted = false
+          // old.push(contex.props.dataChat)
+        }
+
+        store.dispatch(actions("ChatData", old))
       })
     })
   });

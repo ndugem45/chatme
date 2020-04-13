@@ -87,36 +87,6 @@ export default class ChatListComponent extends React.Component {
 
     componentDidMount() {
         const contex = this;
-
-        store.getState().socket.emit('enterRoom', 'userid-' + store.getState().myProfile.id)
-        store.getState().socket.on('userSendMessage', (user, msg) => {
-            console.log(user)
-            if (user == 'userid-' + contex.props.dataChat.id) {
-                const nData = contex.state.data;
-                nData.unshift({
-                    message: msg,
-                    time: Date.now(),
-                    me: false,
-                    margin: new Animated.Value(-40),
-                    opacity: new Animated.Value(0),
-                    reply: false
-                })
-                contex.setState({ data: nData })
-
-                var old = [...store.getState().chatData]
-                if (contex.state.chatIndex < 0) {
-                    var n = contex.props.dataChat
-                    n.chat = contex.state.data
-                    n.muted = false
-                    old.push(contex.props.dataChat)
-                } else {
-                    old[contex.state.chatIndex].chat = contex.state.data
-                }
-
-                store.dispatch(actions("ChatData", old))
-                contex.setState({ chatIndex: store.getState().chatData.findIndex(x => x.id == contex.props.dataChat.id) })
-            }
-        })
         this._loadData()
 
         this.unsubscribe = store.subscribe(() => {
@@ -179,7 +149,7 @@ export default class ChatListComponent extends React.Component {
                 opacity: new Animated.Value(0),
                 reply: this.state.replyData ? this.state.replyData : false
             })
-            store.getState().socket.emit('userSendMessage', 'userid-' + store.getState().myProfile.id, this.state.chat)
+            store.getState().socket.emit('sendMessage', store.getState().myProfile.id, this.props.dataChat.id, this.state.chat)
             this.setState({ data: nData })
             this.setState({ replyData: null })
             this._showOptAnim(false, this.state.optData)

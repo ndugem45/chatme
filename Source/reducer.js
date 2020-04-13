@@ -5,6 +5,7 @@ const initialState = {
     blockList: [],
     optChat: -1,
     socket: null,
+    fontScale: 1
 };
 
 const reducer = (prevState = initialState, action) => {
@@ -34,6 +35,10 @@ const reducer = (prevState = initialState, action) => {
             break;
         case 'Socket':
             r.socket = action.value;
+            return r;
+            break;
+        case 'Font':
+            r.fontScale = action.value;
             return r;
             break;
         default:
