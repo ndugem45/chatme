@@ -21,7 +21,13 @@ import { DefaultText } from '../BaseComponent/defaultText';
 import { constStyle } from '../BaseComponent/constStyle';
 import store from '../Source/store';
 import actions from '../Source/actions';
-import { timeAgo } from '../Source/util'
+import { timeAgo } from '../Source/util';
+import {
+    responsiveHeight,
+    responsiveWidth,
+    responsiveFontSize,
+} from 'react-native-responsive-dimensions';
+import Moment from 'react-moment';
 
 
 
@@ -44,12 +50,18 @@ function chatItem(data, optFunc, replyFunc, moveToMsg, itemHeight) {
                             <Text style={{ fontSize: 13, color: 'grey' }}>
                                 {data.reply.message}
                             </Text>
-                            <DefaultText text={timeAgo(data.reply.time)} smallText={true} color='grey' />
+                            {/* <DefaultText text={timeAgo(data.reply.time)} smallText={true} color='grey' /> */}
+                            <Moment unix element={Text} format={timeAgo(data.reply.time).state == 'last' ? "DD MMMM yyyy" : "HH:mm"} style={{ color: 'grey', fontSize: responsiveFontSize(1.3) }}>
+                                {timeAgo(data.reply.time).time}
+                            </Moment>
                         </TouchableOpacity>
                         : null}
 
                     <DefaultText text={data.message} level={1} color={data.me ? 'white' : ''} />
-                    <DefaultText text={timeAgo(data.time)} smallText={true} state="deactive" align={data.me ? 'right' : 'left'} color={data.me ? 'white' : ''} />
+                    {/* <DefaultText text={timeAgo(data.time)} smallText={true} state="deactive" align={data.me ? 'right' : 'left'} color={data.me ? 'white' : ''} /> */}
+                    <Moment unix element={Text} format={timeAgo(data.time).state == 'last' ? "DD MMMM yyyy" : "HH:mm"} style={{ color: data.me ? 'white' : 'grey', fontSize: responsiveFontSize(1.3) }}>
+                        {timeAgo(data.time).time}
+                    </Moment>
                 </View>
             </TouchableWithoutFeedback>
             {data.me ?
@@ -295,8 +307,8 @@ export default class ChatListComponent extends React.Component {
 const styles = StyleSheet.create({
     chatContainer: {
         flexDirection: 'row',
-        paddingHorizontal: 10,
-        paddingVertical: 5
+        paddingHorizontal: responsiveWidth(3),
+        paddingVertical: responsiveHeight(1)
     },
     itemWrapper: {
         paddingVertical: 5,
@@ -307,18 +319,18 @@ const styles = StyleSheet.create({
     textBoxContainer: {
         backgroundColor: 'white',
         alignSelf: 'center',
-        width: 400,
-        borderRadius: 50 / 2,
-        paddingVertical: 5,
+        marginHorizontal: responsiveWidth(3),
+        borderRadius: responsiveWidth(20),
+        paddingVertical: responsiveHeight(0.3),
         alignItems: 'center',
-        paddingHorizontal: 20,
-        marginVertical: 5
+        paddingHorizontal: responsiveWidth(5.5),
+        marginVertical: responsiveHeight(1)
     },
     textBox: {
         flex: 1,
         marginRight: 10,
-        minHeight: 40,
-        maxHeight: 100
+        minHeight: responsiveHeight(5),
+        maxHeight: responsiveHeight(10)
     },
     sendBtn: {
         width: 25,

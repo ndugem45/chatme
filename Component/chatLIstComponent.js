@@ -20,6 +20,12 @@ import actions from '../Source/actions';
 import { avatar, backGender } from '../Source/avatar';
 import { timeAgo } from '../Source/util'
 import ActionSheet from 'react-native-action-sheet';
+import {
+    responsiveHeight,
+    responsiveWidth,
+    responsiveFontSize,
+} from 'react-native-responsive-dimensions';
+import Moment from 'react-moment';
 
 
 
@@ -32,16 +38,21 @@ function listItem(data, props, longPress, avaTap) {
             </TouchableOpacity>
 
             <View style={styles.contentWrapper}>
-                <View style={{ flex: 4 }}>
+                <View style={{ flex: 2 }}>
                     <DefaultText text={data.item.name} level={2} />
-                    <Text style={{ color: 'darkgrey', fontSize: 13 }} numberOfLines={2}>
+                    <Text style={{ color: 'darkgrey', fontSize: responsiveFontSize(1.5) }} numberOfLines={2}>
                         {data.item.chat.length ? data.item.chat[0].message : ''}
                     </Text>
                 </View>
-                <View style={{ alignItems: 'center', flex: 1 }}>
-                    <DefaultText text={data.item.chat.length ? timeAgo(data.item.chat[0].time) : ''} level={0} />
+                <View style={{ alignItems: 'flex-end', flex: 1 }}>
+                    {/* <DefaultText text={data.item.chat.length ? timeAgo(data.item.chat[0].time) : ''} level={0} /> */}
+
+                    <Moment unix element={Text} format={timeAgo(data.item.chat[0].time).state == 'last' ? "DD MMMM yyyy" : "HH:mm"}>
+                        {timeAgo(data.item.chat[0].time).time}
+                    </Moment>
+
                     <Text>
-                        {data.item.muted ? <Icon name="sound-mute" size={15} color='dimgrey' /> : null}
+                        {data.item.muted ? <Icon name="sound-mute" size={responsiveFontSize(1.5)} color='dimgrey' /> : null}
                     </Text>
                 </View>
 
@@ -50,11 +61,6 @@ function listItem(data, props, longPress, avaTap) {
     )
 }
 
-function listSeparator() {
-    return (
-        <View style={{ marginVertical: 10 }}></View>
-    )
-}
 
 export default class ChatListComponent extends React.Component {
     constructor(props) {
@@ -133,9 +139,9 @@ export default class ChatListComponent extends React.Component {
 
 const styles = StyleSheet.create({
     flatlistStyle: {
-        marginHorizontal: 20,
-        marginTop: 10,
-        marginBottom: 20,
+        marginHorizontal: responsiveWidth(3),
+        marginTop: responsiveHeight(1),
+        marginBottom: responsiveHeight(2),
     },
     avaWrapper: {
         width: 50,
@@ -159,9 +165,9 @@ const styles = StyleSheet.create({
     },
     contentWrapper: {
         flex: 1,
-        marginLeft: 15,
+        marginLeft: responsiveWidth(2.5),
         borderBottomWidth: 1,
-        borderBottomColor: 'lightgrey',
+        borderBottomColor: 'whitesmoke',
         paddingBottom: 10,
         flexDirection: 'row'
     }

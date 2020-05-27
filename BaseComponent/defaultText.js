@@ -4,19 +4,23 @@ import {
 } from 'react-native';
 import { constStyle } from './constStyle';
 import DeviceInfo from 'react-native-device-info';
+import {
+    responsiveHeight,
+    responsiveWidth,
+    responsiveFontSize,
+} from 'react-native-responsive-dimensions';
 
 
 export class DefaultText extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            size: [14, 16, 18, 20]
+            size: [responsiveFontSize(1.8), responsiveFontSize(2.0), responsiveFontSize(2.2), responsiveFontSize(2.4)]
         };
     }
-    // getFontScale()
 
     _fontSize() {
-        return this.props.level >= 4 ? this.state.size[2] : this.props.smallText ? 11 : this.state.size[this.props.level]
+        return this.props.level >= 4 ? this.state.size[2] : this.props.smallText ? responsiveFontSize(1.6) : this.state.size[this.props.level]
     }
 
     _color() {

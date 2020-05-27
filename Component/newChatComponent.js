@@ -16,22 +16,27 @@ import { DefaultText } from '../BaseComponent/defaultText';
 import { constStyle, randColor } from '../BaseComponent/constStyle';
 import { userData } from '../Source/sample';
 import { avatar, backGender } from '../Source/avatar';
+import {
+    responsiveHeight,
+    responsiveWidth,
+    responsiveFontSize,
+} from 'react-native-responsive-dimensions';
 
 function listItem(data, props) {
     return (
-        <TouchableOpacity style={{ paddingHorizontal: 20, marginTop: 10, flexDirection: 'row', alignItems: 'center' }}
+        <TouchableOpacity style={{ paddingHorizontal: responsiveWidth(5), marginTop: responsiveHeight(1), flexDirection: 'row', alignItems: 'center' }}
             onPress={() => props(data.item)}>
             <View style={{ backgroundColor: randColor(), width: 50, height: 50, borderRadius: 10, backgroundColor: data.item.gender == 1 ? backGender.male : backGender.female, overflow: "hidden", borderWidth: 2, borderColor: data.item.gender == 1 ? backGender.male : backGender.female, justifyContent: 'center', alignItems: 'center' }}>
                 <Image source={avatar[data.item.ava]} style={{ width: 50, height: 50 }} resizeMode={'cover'} />
             </View>
-            <Text style={{ fontSize: 17, marginLeft: 10, flex: 1 }}>
+            <Text style={{ fontSize: responsiveFontSize(1.9), marginLeft: 10, flex: 1 }}>
                 {data.item.name}
                 {"\n"}
-                <Text style={{ color: 'darkgrey', fontSize: 14 }}>
+                <Text style={{ color: 'darkgrey', fontSize: responsiveFontSize(1.5) }}>
                     {data.item.greeting}
                 </Text>
             </Text>
-            <Text style={{ fontSize: 12, color: 'grey' }}>
+            <Text style={{ fontSize: responsiveFontSize(1.5), color: 'grey' }}>
                 {data.item.distance}
             </Text>
         </TouchableOpacity>
@@ -40,7 +45,7 @@ function listItem(data, props) {
 
 function listSeparator() {
     return (
-        <View style={{ marginVertical: 5 }}></View>
+        <View style={{ marginVertical: responsiveHeight(0.4) }}></View>
     )
 }
 
@@ -51,11 +56,11 @@ export default class NewChatComponent extends React.Component {
                 <StatusBar translucent backgroundColor="transparent" barStyle={'dark-content'} ></StatusBar>
 
                 <TouchableOpacity style={[styles.floatBtn, { left: 20 }]} onPress={() => this.props.onBackTap()}>
-                    <Icon name="chevron-left" size={25} color={constStyle.baseColor} />
+                    <Icon name="chevron-left" size={responsiveFontSize(2.5)} color={constStyle.baseColor} />
                 </TouchableOpacity>
 
-                <Text style={{ height: 120, paddingHorizontal: 40, fontSize: 20, color: constStyle.baseColor, textAlign: 'center',backgroundColor:'aliceblue',paddingTop:80 }}>
-                    <Icon name="location" size={20} color={constStyle.baseColor} /> Someone Near You
+                <Text style={{ height: responsiveHeight(17), fontSize: responsiveFontSize(2.2), color: constStyle.baseColor, textAlign: 'center',backgroundColor:'aliceblue',paddingTop:80 }}>
+                    <Icon name="location" size={responsiveFontSize(2.2)} color={constStyle.baseColor} /> Someone Near You
                 </Text>
 
                 <FlatList

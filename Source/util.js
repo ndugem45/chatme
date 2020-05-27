@@ -4,10 +4,18 @@ export const timeAgo = (time) => {
     var d = new Date(parseInt(time))
     switch (true) {
         case Math.floor(diff / 3600) <= 24:
-            return `${("0" + d.getHours()).slice(-2)}:${("0" + d.getMinutes()).slice(-2)}`
+            // return `${("0" + d.getHours()).slice(-2)}:${("0" + d.getMinutes()).slice(-2)}`
+            return {
+                time: parseInt(time) / 1000,
+                state: 'present'
+            }
             break
         case Math.floor(diff / 3600) > 24:
-            return `${d.getDay()} - ${d.getMonth() + 1} - ${d.getFullYear()}`
+            // return `${d.getDay()} - ${d.getMonth() + 1} - ${d.getFullYear()}`
+            return {
+                time: parseInt(time) / 1000,
+                state: 'last'
+            }
             break;
 
     }
