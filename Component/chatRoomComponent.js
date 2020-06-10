@@ -190,11 +190,13 @@ export default class ChatListComponent extends React.Component {
             Animated.sequence([
                 Animated.timing(data.opacity, {
                     toValue: 1,
-                    duration: 5
+                    duration: 5,
+                    useNativeDriver: false
                 }),
                 Animated.timing(data.margin, {
                     toValue: 0,
-                    duration: 200
+                    duration: 200,
+                    useNativeDriver: false
                 })
             ]).start();
             setTimeout(() => {
@@ -202,19 +204,21 @@ export default class ChatListComponent extends React.Component {
             }, 200)
         } else if (data) {
             Animated.parallel([
-                Animated.timing(data.margin, {
+                Animated.timing(this.state.optData.margin, {
                     toValue: -40,
-                    duration: 100
+                    duration: 100,
+                    useNativeDriver: false
                 }),
-                Animated.timing(data.opacity, {
+                Animated.timing(this.state.optData.opacity, {
                     toValue: 0,
-                    duration: 100
+                    duration: 100,
+                    useNativeDriver: false
                 })
             ]).start();
+
             setTimeout(() => {
                 this.setState({ optData: null })
-            }, 100)
-
+            }, 150)
         }
 
     }
@@ -233,10 +237,12 @@ export default class ChatListComponent extends React.Component {
     _reply(data) {
         this.setState({ replyData: data })
         this._showOptAnim(false, this.state.optData)
+
         Animated.parallel([
             Animated.timing(this.state.replyDialog.opacity, {
                 toValue: 1,
-                duration: 100
+                duration: 100,
+                useNativeDriver: false
             })
         ]).start();
     }
