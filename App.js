@@ -40,13 +40,12 @@ async function firstLoad(callback = () => { }) {
   var c = await AsyncStorage.getItem("ChatData");
   store.dispatch(actions('ChatData', c ? JSON.parse(c) : chatData));
 
+  var n = await AsyncStorage.getItem("Notif");
+  store.dispatch(actions('Notif', n ? JSON.parse(n) : false));
+
   // var b = await AsyncStorage.getItem("BlockList")
   store.dispatch(actions('BlockList', blockList));
 
-
-  DeviceInfo.getFontScale().then(fontScale => {
-    store.dispatch(actions('Font', Math.round(fontScale)));
-  }),
 
     console.log(`. . . end first load @ ${new Date()}`)
   callback(true)
@@ -61,6 +60,7 @@ export default function App() {
         AsyncStorage.setItem("MyProfile", JSON.stringify(store.getState().myProfile))
         AsyncStorage.setItem("UserData", JSON.stringify(store.getState().userData))
         AsyncStorage.setItem("ChatData", JSON.stringify(store.getState().chatData))
+        AsyncStorage.setItem("Notif", JSON.stringify(store.getState().notifSetting))
         // AsyncStorage.setItem("BlockList", JSON.stringify(store.getState().blockList))
       })
 

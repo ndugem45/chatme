@@ -10,12 +10,14 @@ import {
     FlatList,
     TouchableOpacity,
     Image,
-    Alert
+    Alert,
+    Switch
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import { DefaultText } from '../BaseComponent/defaultText';
 import { constStyle, randColor } from '../BaseComponent/constStyle';
 import store from '../Source/store';
+import actions from '../Source/actions';
 import { avatar, backGender } from '../Source/avatar';
 import {
     responsiveHeight,
@@ -24,6 +26,17 @@ import {
 } from 'react-native-responsive-dimensions';
 
 export default class SettingComponent extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            notif: store.getState().notifSetting
+        }
+    }
+
+    componentDidMount() {
+        console.log("tipe",store.getState().notifSetting)
+    }
+
 
     render() {
         return (
@@ -44,7 +57,7 @@ export default class SettingComponent extends React.Component {
 
 
 
-                <TouchableOpacity style={[styles.menuSetting]}>
+                {/* <TouchableOpacity style={[styles.menuSetting]}>
                     <Icon name="archive" size={responsiveFontSize(2.5)} color={constStyle.baseColor} />
                     <View style={{ flex: 1, marginHorizontal: responsiveHeight(1.5) }}>
                         <DefaultText text="Saved Message" level={2} />
@@ -52,17 +65,23 @@ export default class SettingComponent extends React.Component {
                     <TouchableOpacity>
                         <Icon name="chevron-right" size={responsiveFontSize(2.5)} color={constStyle.baseColor} />
                     </TouchableOpacity>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
-                <TouchableOpacity style={[styles.menuSetting]} onPress={() => this.props.onTapNotification()}>
+                <View style={[styles.menuSetting]} >
                     <Icon name="bell" size={responsiveFontSize(2.5)} color={constStyle.baseColor} />
                     <View style={{ flex: 1, marginHorizontal: responsiveHeight(1.5) }}>
                         <DefaultText text="Notification" level={2} />
                     </View>
-                    <TouchableOpacity>
-                        <Icon name="chevron-right" size={responsiveFontSize(2.5)} color={constStyle.baseColor} />
-                    </TouchableOpacity>
-                </TouchableOpacity>
+                    <Switch
+                        trackColor={{ false: "#767577", true: constStyle.baseColor }}
+                        thumbColor={this.state.notif ? "#f5dd4b" : "#f4f3f4"}
+                        onChange={() => {
+                            this.setState({ notif: !this.state.notif })
+                            store.dispatch(actions("Notif", !this.state.notif))
+                        }}
+                        value={this.state.notif}
+                    />
+                </View>
 
                 <TouchableOpacity style={[styles.menuSetting]} onPress={() => {
                     Alert.alert(
@@ -113,6 +132,6 @@ const styles = StyleSheet.create({
         padding: responsiveWidth(1) + responsiveHeight(1),
         flexDirection: 'row',
         marginBottom: responsiveHeight(1),
-        alignItems:'center'
+        alignItems: 'center'
     }
 });
