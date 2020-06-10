@@ -108,7 +108,7 @@ export function HeaderComponentChat({ scene, previous, navigation }) {
                                 _optChat(option, navigation, buttonIndex)
                             });
                     }}>
-                        <Icon name="dots-three-vertical" size={20 * fontScale} color={constStyle.baseColor} />
+                        <Icon name="dots-three-vertical" size={responsiveFontSize(2.0)} color={constStyle.baseColor} />
                     </TouchableOpacity>
                 </View>
             </View>

@@ -33,16 +33,12 @@ export default class SettingComponent extends React.Component {
         }
     }
 
-    componentDidMount() {
-        console.log("tipe",store.getState().notifSetting)
-    }
-
 
     render() {
         return (
             <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
                 <TouchableOpacity style={[styles.cardProfile]} onPress={() => this.props.onTapProfile()}>
-                    <View style={[styles.photoWrapper]}>
+                    <View style={[styles.photoWrapper, { backgroundColor: store.getState().myProfile.gender == 1 ? backGender.male : backGender.female, borderColor: store.getState().myProfile.gender == 1 ? backGender.male : backGender.female, }]}>
                         <Image source={avatar[store.getState().myProfile.ava]} style={{ width: 70, height: 70 }} resizeMode={'cover'} />
                     </View>
 
@@ -120,10 +116,8 @@ const styles = StyleSheet.create({
         width: 70,
         height: 70,
         borderRadius: 70 / 2,
-        backgroundColor: store.getState().myProfile.gender == 1 ? backGender.male : backGender.female,
         overflow: "hidden",
         borderWidth: 2,
-        borderColor: store.getState().myProfile.gender == 1 ? backGender.male : backGender.female,
         justifyContent: 'center',
         alignItems: 'center'
     },

@@ -5,7 +5,7 @@ const initialState = {
     blockList: [],
     optChat: -1,
     socket: null,
-    notifSetting: false,
+    notifSetting: true,
 };
 
 const reducer = (prevState = initialState, action) => {

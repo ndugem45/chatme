@@ -41,7 +41,7 @@ async function firstLoad(callback = () => { }) {
   store.dispatch(actions('ChatData', c ? JSON.parse(c) : chatData));
 
   var n = await AsyncStorage.getItem("Notif");
-  store.dispatch(actions('Notif', n ? JSON.parse(n) : false));
+  store.dispatch(actions('Notif', n ? JSON.parse(n) : true));
 
   // var b = await AsyncStorage.getItem("BlockList")
   store.dispatch(actions('BlockList', blockList));

@@ -11,6 +11,7 @@ import {
     TouchableOpacity,
     Image
 } from 'react-native';
+import ActionSheet from 'react-native-action-sheet';
 import Icon from 'react-native-vector-icons/Entypo';
 import { DefaultText } from '../BaseComponent/defaultText';
 import { constStyle, randColor } from '../BaseComponent/constStyle';
@@ -35,6 +36,30 @@ export default class ProfileComponent extends React.Component {
         this.setState({ userData: this.props.userData(), me: this.props.userData().id == store.getState().myProfile.id ? true : false })
     }
 
+    _option() {
+        var theBtn = [
+            'Report'
+        ];
+        var myBtn = [
+            'Change Avatar',
+            'Change Cover',
+            'Edit Profile'
+        ];
+
+        var DESTRUCTIVE_INDEX = 3;
+        var CANCEL_INDEX = 4;
+
+        ActionSheet.showActionSheetWithOptions({
+            options: this.props.userData().id == store.getState().myProfile.id ? myBtn : theBtn,
+            cancelButtonIndex: CANCEL_INDEX,
+            destructiveButtonIndex: DESTRUCTIVE_INDEX,
+            tintColor: 'blue'
+        },
+            (buttonIndex) => {
+                // _optChat(option, navigation, buttonIndex)
+            });
+    }
+
     render() {
         return (
             <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
@@ -44,7 +69,7 @@ export default class ProfileComponent extends React.Component {
                     <Icon name="chevron-left" size={responsiveFontSize(2.5)} color={constStyle.baseColor} />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.floatBtn, { right: 20 }]}>
+                <TouchableOpacity style={[styles.floatBtn, { right: 20 }]} onPress={() => this._option()}>
                     <Icon name="dots-three-horizontal" size={responsiveFontSize(2.5)} color={constStyle.baseColor} />
                 </TouchableOpacity>
 
